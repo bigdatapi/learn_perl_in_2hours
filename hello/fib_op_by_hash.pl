@@ -39,7 +39,7 @@ sub run {
 
     # formatted string
     my $res = sprintf( "The ${n}th element of fibnacci sequence is %d\n",
-        fibnacci($n,0) );
+        fibnacci( $n, 0 ) );
     print STDOUT $res;
 }
 
@@ -55,6 +55,7 @@ while (<>) {
 }
 
 my $call_stack_hash = {};
+
 sub fibnacci($$) {
     my ( $n, $depth ) = @_;
     for my $i ( 0 .. $depth ) {
@@ -65,8 +66,13 @@ sub fibnacci($$) {
         return 1;
     }
 
-    my $ret = (exists $call_stack_hash->{$n - 1} ? $call_stack_hash->{$n - 1} : fibnacci($n-1,$depth+1)) + (exists $call_stack_hash->{$n-2} ? $call_stack_hash->{$n-2}:fibnacci($n-2,$depth+1));
-    if (not exists $call_stack_hash->{$n}) {
+    my $ret = (
+        exists $call_stack_hash->{ $n - 1 } ? $call_stack_hash->{ $n - 1 }
+        : fibnacci( $n - 1, $depth + 1 ) )
+        + (
+        exists $call_stack_hash->{ $n - 2 } ? $call_stack_hash->{ $n - 2 }
+        : fibnacci( $n - 2, $depth + 1 ) );
+    if ( not exists $call_stack_hash->{$n} ) {
         $call_stack_hash->{$n} = $ret;
     }
     return $ret;

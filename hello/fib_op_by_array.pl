@@ -39,7 +39,7 @@ sub run {
 
     # formatted string
     my $res = sprintf( "The ${n}th element of fibnacci sequence is %d\n",
-        fibnacci($n,0) );
+        fibnacci( $n, 0 ) );
     print STDOUT $res;
 }
 
@@ -54,11 +54,12 @@ while (<>) {
     run($_);
 }
 
-my $call_stack_arr =[];
+my $call_stack_arr = [];
+
 sub fibnacci($$) {
 
     # list context, unpack arguments
-    my ($n,$depth) = @_;
+    my ( $n, $depth ) = @_;
     for my $i ( 0 .. $depth ) {
         print "  ";
     }
@@ -67,9 +68,13 @@ sub fibnacci($$) {
         return 1;
     }
 
-    my $ret = (defined $call_stack_arr->[$n-1] ? $call_stack_arr->[$n-1]:fibnacci($n-1,$depth+1))+($call_stack_arr->[$n-2]?$call_stack_arr->[$n-2]:fibnacci($n-2,$depth+1));
-    if (not defined($call_stack_arr->[$n])){
-        $call_stack_arr->[$n]=$ret;
+    my $ret = (
+        defined $call_stack_arr->[ $n - 1 ] ? $call_stack_arr->[ $n - 1 ]
+        : fibnacci( $n - 1, $depth + 1 ) )
+        + ( $call_stack_arr->[ $n - 2 ] ? $call_stack_arr->[ $n - 2 ]
+        : fibnacci( $n - 2, $depth + 1 ) );
+    if ( not defined( $call_stack_arr->[$n] ) ) {
+        $call_stack_arr->[$n] = $ret;
     }
     return $ret;
 }
